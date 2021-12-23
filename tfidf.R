@@ -1,12 +1,11 @@
 library(dplyr)
-library(janeaustenr)
 library(tidytext)
 library(forcats)
 library(ggplot2)
 
 tweet_words <- read.csv('data/workable_data.csv') %>% 
   unnest_tokens(word, clean_text_string) %>% 
-  count(modularity_count, word, sort = TRUE)
+  count(modularity_class, word, sort = TRUE)
 
 total_words <- tweet_words %>% 
   group_by(modularity_class) %>% 
@@ -19,9 +18,10 @@ tweet_tf_idf <- tweet_words %>%
 
 tweet_tf_idf %>%
   group_by(modularity_class) %>%
-  slice_max(tf_idf, n = 10) %>%
+  subset(modularity_class %in% c(1,2)) %>%
+  slice_max(tf_idf, n = 5) %>%
   ungroup() %>%
   ggplot(aes(tf_idf, fct_reorder(word, tf_idf), fill = modularity_class)) +
   geom_col(show.legend = FALSE) +
   facet_wrap(~modularity_class, ncol = 2, scales = "free") +
-  labs(x = "tf-idf", y = NULL)
+  labs(x = NULL, y = NULL)
