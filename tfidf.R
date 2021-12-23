@@ -3,7 +3,7 @@ library(tidytext)
 library(forcats)
 library(ggplot2)
 
-tweet_words <- read.csv('data/workable_data.csv') %>% 
+tweet_words <- read.csv('data/R_data/workable_data.csv') %>% 
   unnest_tokens(word, clean_text_string) %>% 
   count(modularity_class, word, sort = TRUE)
 
