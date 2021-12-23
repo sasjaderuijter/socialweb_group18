@@ -41,3 +41,6 @@ data>
 
     R_data>
         workable_data.csv: data used for the R script TF-IDF.
+
+    raw_data>
+        raw1 & raw2: raw gathered tweets.
